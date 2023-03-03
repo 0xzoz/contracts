@@ -1733,6 +1733,30 @@ contract NameRegistryTest is Test {
         assertEq(nameRegistry.recoveryOf(ALICE_TOKEN_ID), address(0));
     }
 
+    function testFuzzCannotSafeTransferFromApproverIfRegistrable(address alice, address approver, address bob) public {
+        _assumeClean(alice);
+        vm.assume(bob != address(0));
+        vm.assume(alice != bob);
+        vm.warp(JAN1_2023_TS);
+
+        // alice sets charlie as her approver
+        vm.prank(alice);
+        nameRegistry.approve(approver, ALICE_TOKEN_ID);
+
+        vm.prank(approver);
+        vm.expectRevert("ERC721: invalid token ID");
+        nameRegistry.safeTransferFrom(alice, bob, ALICE_TOKEN_ID);
+
+        assertEq(nameRegistry.balanceOf(alice), 0);
+        assertEq(nameRegistry.balanceOf(bob), 0);
+        assertEq(nameRegistry.expiryTsOf(ALICE_TOKEN_ID), 0);
+        vm.expectRevert("ERC721: invalid token ID");
+        assertEq(nameRegistry.ownerOf(ALICE_TOKEN_ID), address(0));
+        assertEq(nameRegistry.recoveryTsOf(ALICE_TOKEN_ID), 0);
+        assertEq(nameRegistry.recoveryDestinationOf(ALICE_TOKEN_ID), address(0));
+        assertEq(nameRegistry.recoveryOf(ALICE_TOKEN_ID), address(0));
+    }
+
     function testFuzzCannotSafeTransferFromIfNotOwner(address alice, address bob, address recovery) public {
         _assumeClean(alice);
         _assumeClean(bob);
