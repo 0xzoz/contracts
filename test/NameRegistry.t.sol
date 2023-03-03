@@ -1605,8 +1605,10 @@ contract NameRegistryTest is Test {
     ) public {
         _assumeClean(alice);
         _assumeClean(recovery);
+        _assumeClean(approver);
         vm.assume(alice != bob);
         vm.assume(bob != address(0));
+        vm.assume(approver != alice);
         _register(alice);
         uint256 renewableTs = block.timestamp + REGISTRATION_PERIOD;
         uint256 biddableTs = renewableTs + RENEWAL_PERIOD;
@@ -1684,8 +1686,10 @@ contract NameRegistryTest is Test {
     ) public {
         _assumeClean(alice);
         _assumeClean(recovery);
+        _assumeClean(approver);
         vm.assume(bob != address(0));
         vm.assume(alice != bob);
+        vm.assume(approver != alice);
         _register(alice);
         uint256 renewableTs = block.timestamp + REGISTRATION_PERIOD;
 
@@ -1889,8 +1893,10 @@ contract NameRegistryTest is Test {
     ) public {
         _assumeClean(alice);
         _assumeClean(recovery);
+        _assumeClean(approver);
         vm.assume(alice != bob);
         vm.assume(bob != address(0));
+        vm.assume(approver != alice);
         _register(alice);
         uint256 renewableTs = block.timestamp + REGISTRATION_PERIOD;
         uint256 biddableTs = renewableTs + RENEWAL_PERIOD;
@@ -1970,8 +1976,10 @@ contract NameRegistryTest is Test {
     ) public {
         _assumeClean(alice);
         _assumeClean(recovery);
+        _assumeClean(approver);
         vm.assume(bob != address(0));
         vm.assume(alice != bob);
+        vm.assume(approver != alice);
         _register(alice);
         uint256 renewableTs = block.timestamp + REGISTRATION_PERIOD;
 
