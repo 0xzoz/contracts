@@ -1691,14 +1691,14 @@ contract NameRegistryTest is Test {
 
         uint256 requestTs = _requestRecovery(alice, recovery);
 
+        // alice sets charlie as her approver
+        vm.prank(alice);
+        nameRegistry.approve(approver, ALICE_TOKEN_ID);
+
         // Pause the contract
         _grant(OPERATOR_ROLE, ADMIN);
         vm.prank(ADMIN);
         nameRegistry.pause();
-
-        // alice sets charlie as her approver
-        vm.prank(alice);
-        nameRegistry.approve(approver, ALICE_TOKEN_ID);
 
         vm.prank(approver);
         vm.expectRevert("Pausable: paused");
