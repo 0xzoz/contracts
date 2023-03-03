@@ -1597,7 +1597,7 @@ contract NameRegistryTest is Test {
         assertEq(nameRegistry.recoveryOf(ALICE_TOKEN_ID), recovery);
     }
 
-    function testFuzzCannotSafeTransferIfFnameExpiredFromApprover(
+    function testFuzzCannotSafeTransferFromApproverIfFnameExpired(
         address alice,
         address bob,
         address approver,
